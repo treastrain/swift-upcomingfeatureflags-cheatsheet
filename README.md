@@ -56,7 +56,6 @@ import PackageDescription
 
 extension SwiftSetting {
     static let forwardTrailingClosures: Self = .enableUpcomingFeature("ForwardTrailingClosures")              // SE-0286, Swift 5.3,  SwiftPM 5.8+
-    static let strictConcurrency: Self = .enableUpcomingFeature("StrictConcurrency")                          // SE-0337, Swift 5.6,  SwiftPM 5.8+
     static let existentialAny: Self = .enableUpcomingFeature("ExistentialAny")                                // SE-0335, Swift 5.6,  SwiftPM 5.8+
     static let bareSlashRegexLiterals: Self = .enableUpcomingFeature("BareSlashRegexLiterals")                // SE-0354, Swift 5.7,  SwiftPM 5.8+
     static let conciseMagicFile: Self = .enableUpcomingFeature("ConciseMagicFile")                            // SE-0274, Swift 5.8,  SwiftPM 5.8+
@@ -72,7 +71,7 @@ extension SwiftSetting {
 
 ```swift
 extension SwiftSetting: CaseIterable {
-    public static var allCases: [Self] {[.forwardTrailingClosures, .strictConcurrency, .existentialAny, .bareSlashRegexLiterals, .conciseMagicFile, .importObjcForwardDeclarations, .disableOutwardActorInference, .deprecateApplicationMain, .isolatedDefaultValues, .globalConcurrency]}
+    public static var allCases: [Self] {[.forwardTrailingClosures, .existentialAny, .bareSlashRegexLiterals, .conciseMagicFile, .importObjcForwardDeclarations, .disableOutwardActorInference, .deprecateApplicationMain, .isolatedDefaultValues, .globalConcurrency]}
 }
 ```
 
@@ -87,11 +86,6 @@ extension SwiftSetting {
     /// - Since: SwiftPM 5.8
     /// - SeeAlso: [SE-0286: Forward-scan matching for trailing closures](https://github.com/apple/swift-evolution/blob/main/proposals/0286-forward-scan-trailing-closures.md)
     static let forwardTrailingClosures: Self = .enableUpcomingFeature("ForwardTrailingClosures")
-    /// Incremental migration to concurrency checking
-    /// - Version: Swift 5.6
-    /// - Since: SwiftPM 5.8
-    /// - SeeAlso: [SE-0337: Incremental migration to concurrency checking](https://github.com/apple/swift-evolution/blob/main/proposals/0337-support-incremental-migration-to-concurrency-checking.md)
-    static let strictConcurrency: Self = .enableUpcomingFeature("StrictConcurrency")
     /// Introduce existential `any`
     /// - Version: Swift 5.6
     /// - Since: SwiftPM 5.8
@@ -142,7 +136,6 @@ extension SwiftSetting: CaseIterable {
     public static var allCases: [Self] {
         [
             .forwardTrailingClosures,
-            .strictConcurrency,
             .existentialAny,
             .bareSlashRegexLiterals,
             .conciseMagicFile,
