@@ -46,11 +46,74 @@ let package = Package(
 
 // Set all flags to targets 🎉
 package.targets
-    .filter { ![.system, .binary, .plugin, .macro].contains($0.type) }
+    .filter { ![.system, .binary, .plugin].contains($0.type) }
     .forEach { $0.swiftSettings = SwiftSetting.allCases }
 ```
 
-## Short
+## Choose the swift-tools-version
+
+> [!TIP]
+> If you are using swift-tools-version 6.0 and have Swift language mode 5 for the entire package or per target, you may want to use a combination of both.
+
+<details>
+<summary><h2>For swift-tools-version 6.0 (Swift 6.0)</h2></summary>
+
+### Short
+```swift
+import PackageDescription
+
+extension SwiftSetting {
+    static let existentialAny: Self = .enableUpcomingFeature("ExistentialAny")                      // SE-0335, Swift 5.6,  SwiftPM 5.8+
+    static let internalImportsByDefault: Self = .enableUpcomingFeature("InternalImportsByDefault")  // SE-0409, Swift 6.0,  SwiftPM 6.0+
+}
+```
+
+#### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
+
+```swift
+extension SwiftSetting: @retroactive CaseIterable {
+    public static var allCases: [Self] {[.existentialAny, .internalImportsByDefault]}
+}
+```
+
+### Full
+
+```swift
+import PackageDescription
+
+extension SwiftSetting {
+    /// Introduce existential `any`
+    /// - Version: Swift 5.6
+    /// - Since: SwiftPM 5.8
+    /// - SeeAlso: [SE-0335: Introduce existential `any`](https://github.com/apple/swift-evolution/blob/main/proposals/0335-existential-any.md)
+    static let existentialAny: Self = .enableUpcomingFeature("ExistentialAny")
+    /// Access-level modifiers on import declarations
+    /// - Version: Swift 6.0
+    /// - Since: SwiftPM 6.0
+    /// - SeeAlso: [SE-0409: Access-level modifiers on import declarations](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0409-access-level-on-imports.md)
+    static let internalImportsByDefault: Self = .enableUpcomingFeature("InternalImportsByDefault")
+}
+```
+
+#### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
+
+```swift
+extension SwiftSetting: @retroactive CaseIterable {
+    public static var allCases: [Self] {
+        [
+            .existentialAny,
+            .internalImportsByDefault,
+        ]
+    }
+}
+```
+
+</details>
+
+<details>
+<summary><h2>For swift-tools-version 5.8 to 5.10 (Swift 5.8 - 5.10)</h2></summary>
+
+### Short
 ```swift
 import PackageDescription
 
@@ -67,7 +130,7 @@ extension SwiftSetting {
 }
 ```
 
-### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
+#### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
 
 ```swift
 extension SwiftSetting: CaseIterable {
@@ -75,7 +138,7 @@ extension SwiftSetting: CaseIterable {
 }
 ```
 
-## Full
+### Full
 
 ```swift
 import PackageDescription
@@ -129,7 +192,7 @@ extension SwiftSetting {
 }
 ```
 
-### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
+#### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
 
 ```swift
 extension SwiftSetting: CaseIterable {
@@ -148,6 +211,8 @@ extension SwiftSetting: CaseIterable {
     }
 }
 ```
+
+</details>
 
 ## License
 
