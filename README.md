@@ -53,7 +53,69 @@ package.targets
 ## Choose the swift-tools-version
 
 > [!TIP]
-> If you are using swift-tools-version 6.0 and have Swift language mode 5 for the entire package or per target, you may want to use a combination of both.
+> If you are using swift-tools-version 6.x and have Swift language mode 5 for the entire package or per target, you may want to use a combination of both.
+
+<details>
+<summary><h2>For swift-tools-version 6.1 (Swift 6.1)</h2></summary>
+
+### Short
+```swift
+import PackageDescription
+
+extension SwiftSetting {
+    static let existentialAny: Self = .enableUpcomingFeature("ExistentialAny")                      // SE-0335, Swift 5.6,  SwiftPM 5.8+
+    static let internalImportsByDefault: Self = .enableUpcomingFeature("InternalImportsByDefault")  // SE-0409, Swift 6.0,  SwiftPM 6.0+
+    static let memberImportVisibility: Self = .enableUpcomingFeature("MemberImportVisibility")      // SE-0444, Swift 6.1,  SwiftPM 6.1+
+}
+```
+
+#### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
+
+```swift
+extension SwiftSetting: @retroactive CaseIterable {
+    public static var allCases: [Self] {[.existentialAny, .internalImportsByDefault, .memberImportVisibility]}
+}
+```
+
+### Full
+
+```swift
+import PackageDescription
+
+extension SwiftSetting {
+    /// Introduce existential `any`
+    /// - Version: Swift 5.6
+    /// - Since: SwiftPM 5.8
+    /// - SeeAlso: [SE-0335: Introduce existential `any`](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0335-existential-any.md)
+    static let existentialAny: Self = .enableUpcomingFeature("ExistentialAny")
+    /// Access-level modifiers on import declarations
+    /// - Version: Swift 6.0
+    /// - Since: SwiftPM 6.0
+    /// - SeeAlso: [SE-0409: Access-level modifiers on import declarations](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0409-access-level-on-imports.md)
+    static let internalImportsByDefault: Self = .enableUpcomingFeature("InternalImportsByDefault")
+    /// Member import visibility
+    /// - Version: Swift 6.1
+    /// - Since: SwiftPM 6.1
+    /// - SeeAlso: [SE-0444: Member import visibility](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0444-member-import-visibility.md)
+    static let memberImportVisibility: Self = .enableUpcomingFeature("MemberImportVisibility")
+}
+```
+
+#### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
+
+```swift
+extension SwiftSetting: @retroactive CaseIterable {
+    public static var allCases: [Self] {
+        [
+            .existentialAny,
+            .internalImportsByDefault,
+            .memberImportVisibility,
+        ]
+    }
+}
+```
+
+</details>
 
 <details>
 <summary><h2>For swift-tools-version 6.0 (Swift 6.0)</h2></summary>
