@@ -1,36 +1,18 @@
-# Swift Upcoming Feature Flags Cheatsheet
+# `SwiftSetting` extension for upcoming features for swift-tools-version 6.1 (Swift 6.1)
 
-This is a cheatsheet for applying [Swift's Upcoming Feature Flags](https://www.swift.org/blog/using-upcoming-feature-flags) to your `Package.swift` easily.
-
-> [!NOTE]
-> This cheatsheet only includes those that have been implemented in the release. It does not include accepted ones, etc. \
-> This does not include Experimental Features.
-
-## `SwiftSetting` extension for upcoming features for swift-tools-version 6.2 (Swift 6.2)
-
-> [!TIP]
-> If you are using a swift-tools-version earlier than 6.2, please refer to the content at the following link.
->
-> - [swift-tools-version: 6.1](Archives/For-swift-tools-version-6.1.md)
-> - [swift-tools-version: 6.0](Archives/For-swift-tools-version-6.0.md)
-> - [swift-tools-version: 5.8, 5.9, 5.10](Archives/For-swift-tools-version-5.8+.md)
-
-### For Swift Language Version 6
+## For Swift Language Version 6
 
 ```swift
 import PackageDescription
 
 extension SwiftSetting {
-    static let existentialAny: Self = .enableUpcomingFeature("ExistentialAny")                                    // SE-0335, Swift 5.6,  SwiftPM 5.8+
-    static let internalImportsByDefault: Self = .enableUpcomingFeature("InternalImportsByDefault")                // SE-0409, Swift 6.0,  SwiftPM 6.0+
-    static let memberImportVisibility: Self = .enableUpcomingFeature("MemberImportVisibility")                    // SE-0444, Swift 6.1,  SwiftPM 6.1+
-    static let inferIsolatedConformances: Self = .enableUpcomingFeature("InferIsolatedConformances")              // SE-0470, Swift 6.2,  SwiftPM 6.2+
-    static let nonisolatedNonsendingByDefault: Self = .enableUpcomingFeature("NonisolatedNonsendingByDefault")    // SE-0461, Swift 6.2,  SwiftPM 6.2+
-    static let immutableWeakCaptures: Self = .enableUpcomingFeature("ImmutableWeakCaptures")                      // SE-0481, Swift 6.2,  SwiftPM 6.2+
+    static let existentialAny: Self = .enableUpcomingFeature("ExistentialAny")                        // SE-0335, Swift 5.6,  SwiftPM 5.8+
+    static let internalImportsByDefault: Self = .enableUpcomingFeature("InternalImportsByDefault")    // SE-0409, Swift 6.0,  SwiftPM 6.0+
+    static let memberImportVisibility: Self = .enableUpcomingFeature("MemberImportVisibility")        // SE-0444, Swift 6.1,  SwiftPM 6.1+
 }
 ```
 
-#### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
+### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
 
 ```swift
 extension SwiftSetting: @retroactive CaseIterable {
@@ -39,16 +21,13 @@ extension SwiftSetting: @retroactive CaseIterable {
             .existentialAny,
             .internalImportsByDefault,
             .memberImportVisibility,
-            .inferIsolatedConformances,
-            .nonisolatedNonsendingByDefault,
-            .immutableWeakCaptures,
         ]
     }
 }
 ```
 
 <details>
-<summary><h3>For Swift Language Version 5</h3></summary>
+<summary><h2>For Swift Language Version 5</h2></summary>
 
 ```swift
 import PackageDescription
@@ -72,13 +51,10 @@ extension SwiftSetting {
     static let existentialAny: Self = .enableUpcomingFeature("ExistentialAny")                                          // SE-0335, Swift 5.6,  SwiftPM 5.8+
     static let internalImportsByDefault: Self = .enableUpcomingFeature("InternalImportsByDefault")                      // SE-0409, Swift 6.0,  SwiftPM 6.0+
     static let memberImportVisibility: Self = .enableUpcomingFeature("MemberImportVisibility")                          // SE-0444, Swift 6.1,  SwiftPM 6.1+
-    static let inferIsolatedConformances: Self = .enableUpcomingFeature("InferIsolatedConformances")                    // SE-0470, Swift 6.2,  SwiftPM 6.2+
-    static let nonisolatedNonsendingByDefault: Self = .enableUpcomingFeature("NonisolatedNonsendingByDefault")          // SE-0461, Swift 6.2,  SwiftPM 6.2+
-    static let immutableWeakCaptures: Self = .enableUpcomingFeature("ImmutableWeakCaptures")                            // SE-0481, Swift 6.2,  SwiftPM 6.2+
 }
 ```
 
-#### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
+### [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance
 
 ```swift
 extension SwiftSetting: @retroactive CaseIterable {
@@ -102,9 +78,6 @@ extension SwiftSetting: @retroactive CaseIterable {
             .existentialAny,
             .internalImportsByDefault,
             .memberImportVisibility,
-            .inferIsolatedConformances,
-            .nonisolatedNonsendingByDefault,
-            .immutableWeakCaptures,
         ]
     }
 }
@@ -112,50 +85,6 @@ extension SwiftSetting: @retroactive CaseIterable {
 
 </details>
 
-## Usage
-
-Copy and paste the "`SwiftSetting` extension" found above into your own `Package.swift`.
-
-```swift
-import PackageDescription
-
-// Paste here 📋
-
-let package = Package(
-    name: "Package Name",
-    targets: [
-        .target(
-            name: "Target Name",
-            swiftSettings: [
-                .existentialAny // <-- Specify easily using completion 🥳
-            ]
-        )
-    ]
-)
-```
-
-Or, copy and paste the [`CaseIterable`](https://developer.apple.com/documentation/swift/caseiterable) Conformance as needed.
-
-```swift
-import PackageDescription
-
-// Paste here 📋
-
-let package = Package(
-    name: "Package Name",
-    targets: [
-        .target(
-            name: "Target Name"
-        )
-    ]
-)
-
-// Set all flags to targets 🎉
-package.targets
-    .filter { ![.system, .binary, .plugin].contains($0.type) }
-    .forEach { $0.swiftSettings = SwiftSetting.allCases }
-```
-
-## License
+# License
 
 This cheatsheet by [@treastrain](https://github.com/treastrain) is marked with [CC0 1.0 Universal](http://creativecommons.org/publicdomain/zero/1.0?ref=chooser-v1). To view a copy of this license, visit http://creativecommons.org/publicdomain/zero/1.0?ref=chooser-v1
