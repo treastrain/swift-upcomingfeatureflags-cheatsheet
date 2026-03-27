@@ -6,7 +6,7 @@ This is a cheatsheet for applying [Swift's Upcoming Feature Flags](https://www.s
 > This cheatsheet only includes those that have been implemented in the release. It does not include accepted ones, etc. \
 > This does not include Experimental Features.
 
-## `SwiftSetting` extension for upcoming features for swift-tools-version 6.2 (Swift 6.2)
+## `SwiftSetting` extension for upcoming features for swift-tools-version 6.2 or 6.3 (Swift 6.2, 6.3)
 
 > [!TIP]
 > If you are using a swift-tools-version earlier than 6.2, please refer to the content at the following link.
